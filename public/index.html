@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Classroom Information System</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <div class="header-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <div>
+        <h1>Smart Classroom Information System</h1>
+        <p>Register your classroom and generate a unique QR code</p>
+      </div>
+    </div>
+    <a href="/classrooms" class="btn-view-all"><i class="fas fa-list"></i> View All Classrooms</a>
+  </header>
+
+  <!-- Form -->
+  <main class="container">
+    <form action="/submit" method="POST" id="classroomForm">
+
+      <!-- Basic Info -->
+      <div class="form-card">
+        <div class="card-header blue">
+          <i class="fas fa-school"></i>
+          <h2>Basic Information</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label><i class="fas fa-university"></i> School Name <span class="req">*</span></label>
+              <input type="text" name="school_name" placeholder="Enter school name" required/>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-door-open"></i> Classroom Number / Name <span class="req">*</span></label>
+              <input type="text" name="classroom_number" placeholder="e.g. Room 101 / Science Lab" required/>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-layer-group"></i> Grade and Class <span class="req">*</span></label>
+              <input type="text" name="grade_class" placeholder="e.g. Grade 10 - Section A" required/>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-user-tie"></i> Class Teacher Name <span class="req">*</span></label>
+              <input type="text" name="class_teacher" placeholder="Enter teacher's full name" required/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Facilities -->
+      <div class="form-card">
+        <div class="card-header green">
+          <i class="fas fa-tools"></i>
+          <h2>Classroom Facilities</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid facilities-grid">
+            <div class="form-group facility-item">
+              <label><i class="fas fa-table"></i> Tables</label>
+              <input type="number" name="num_tables" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-chair"></i> Chairs</label>
+              <input type="number" name="num_chairs" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-align-justify"></i> Desks</label>
+              <input type="number" name="num_desks" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-chalkboard"></i> Whiteboards</label>
+              <input type="number" name="num_whiteboards" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-fan"></i> Fans</label>
+              <input type="number" name="num_fans" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-lightbulb"></i> Lights</label>
+              <input type="number" name="num_lights" min="0" value="0" placeholder="0"/>
+            </div>
+            <div class="form-group facility-item">
+              <label><i class="fas fa-desktop"></i> Computers</label>
+              <input type="number" name="num_computers" min="0" value="0" placeholder="0"/>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label><i class="fas fa-plus-circle"></i> Other Available Facilities</label>
+            <textarea name="other_facilities" rows="3" placeholder="e.g. Projector, Smart Board, Air Conditioner, CCTV Camera..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Students -->
+      <div class="form-card">
+        <div class="card-header orange">
+          <i class="fas fa-users"></i>
+          <h2>Student Information</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid student-grid">
+            <div class="form-group student-card total-card">
+              <label><i class="fas fa-users"></i> Total Students</label>
+              <input type="number" name="total_students" id="total_students" min="0" value="0" placeholder="0" oninput="autoCalc()"/>
+            </div>
+            <div class="form-group student-card boys-card">
+              <label><i class="fas fa-male"></i> Boys</label>
+              <input type="number" name="male_students" id="male_students" min="0" value="0" placeholder="0" oninput="autoCalc()"/>
+            </div>
+            <div class="form-group student-card girls-card">
+              <label><i class="fas fa-female"></i> Girls</label>
+              <input type="number" name="female_students" id="female_students" min="0" value="0" placeholder="0" oninput="autoCalc()"/>
+            </div>
+          </div>
+          <div id="student-warning" class="student-warning hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            Boys + Girls count does not match Total Students.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-section">
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-qrcode"></i> Save & Generate QR Code
+        </button>
+      </div>
+
+    </form>
+  </main>
+
+  <footer class="main-footer">
+    <p><i class="fas fa-qrcode"></i> Smart Classroom Information System &copy; 2026</p>
+  </footer>
+
+  <script src="/js/form.js"></script>
+</body>
+</html>

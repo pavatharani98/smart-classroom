@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= classroom.classroom_number %> – <%= classroom.school_name %></title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body class="classroom-page">
+
+  <!-- Classroom Header -->
+  <div class="classroom-header">
+    <div class="school-badge"><i class="fas fa-university"></i> &nbsp;<%= classroom.school_name %></div>
+    <h1><i class="fas fa-door-open"></i> <%= classroom.classroom_number %></h1>
+    <div class="grade-badge"><i class="fas fa-layer-group"></i> &nbsp;<%= classroom.grade_class %></div>
+  </div>
+
+  <div class="classroom-container">
+
+    <!-- Basic Info -->
+    <div class="info-section">
+      <div class="info-section-header purple">
+        <i class="fas fa-info-circle"></i> Basic Information
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label"><i class="fas fa-university"></i> School Name</div>
+          <div class="value"><%= classroom.school_name %></div>
+        </div>
+        <div class="info-item">
+          <div class="label"><i class="fas fa-door-open"></i> Classroom</div>
+          <div class="value"><%= classroom.classroom_number %></div>
+        </div>
+        <div class="info-item">
+          <div class="label"><i class="fas fa-layer-group"></i> Grade & Class</div>
+          <div class="value"><%= classroom.grade_class %></div>
+        </div>
+        <div class="info-item">
+          <div class="label"><i class="fas fa-user-tie"></i> Class Teacher</div>
+          <div class="value"><%= classroom.class_teacher %></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Facilities -->
+    <div class="info-section">
+      <div class="info-section-header teal">
+        <i class="fas fa-tools"></i> Classroom Facilities
+      </div>
+      <div class="facility-grid">
+        <% const facilities = [
+          { icon: '🪑', count: classroom.num_chairs, label: 'Chairs' },
+          { icon: '🗂️', count: classroom.num_tables, label: 'Tables' },
+          { icon: '📋', count: classroom.num_desks, label: 'Desks' },
+          { icon: '📝', count: classroom.num_whiteboards, label: 'Whiteboards' },
+          { icon: '🌀', count: classroom.num_fans, label: 'Fans' },
+          { icon: '💡', count: classroom.num_lights, label: 'Lights' },
+          { icon: '🖥️', count: classroom.num_computers, label: 'Computers' },
+        ]; %>
+        <% facilities.forEach(f => { %>
+          <div class="facility-tile">
+            <span class="f-icon"><%= f.icon %></span>
+            <div class="f-count"><%= f.count %></div>
+            <div class="f-label"><%= f.label %></div>
+          </div>
+        <% }) %>
+      </div>
+      <% if (classroom.other_facilities && classroom.other_facilities.trim()) { %>
+      <div class="other-facilities">
+        <strong><i class="fas fa-plus-circle"></i> Other Facilities:</strong>
+        <%= classroom.other_facilities %>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- Students -->
+    <div class="info-section">
+      <div class="info-section-header pink">
+        <i class="fas fa-users"></i> Student Information
+      </div>
+      <div class="student-stats">
+        <div class="stat-box total">
+          <div class="s-icon">👥</div>
+          <div class="s-count"><%= classroom.total_students %></div>
+          <div class="s-label">Total Students</div>
+        </div>
+        <div class="stat-box boys">
+          <div class="s-icon">👦</div>
+          <div class="s-count"><%= classroom.male_students %></div>
+          <div class="s-label">Boys</div>
+        </div>
+        <div class="stat-box girls">
+          <div class="s-icon">👧</div>
+          <div class="s-count"><%= classroom.female_students %></div>
+          <div class="s-label">Girls</div>
+        </div>
+      </div>
+
+      <% if (classroom.total_students > 0) {
+        const boysPct = Math.round((classroom.male_students / classroom.total_students) * 100);
+        const girlsPct = 100 - boysPct;
+      %>
+      <div class="gender-bar">
+        <div class="gender-bar-label">
+          <span class="boys-label">👦 Boys <%= boysPct %>%</span>
+          <span class="girls-label">Girls <%= girlsPct %>% 👧</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: <%= boysPct %>%"></div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- Footer nav -->
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="/" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:white;border-radius:50px;text-decoration:none;color:#3949ab;font-weight:700;border:2px solid #c5cae9;font-size:0.9rem;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <i class="fas fa-home"></i> Back to Home
+      </a>
+    </div>
+
+  </div>
+
+  <footer class="main-footer">
+    <p><i class="fas fa-qrcode"></i> Smart Classroom Information System &copy; 2026</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "smart-classroom-qr",
+  "version": "1.0.0",
+  "description": "Smart Classroom Information System Using QR Code",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.0",
+    "ejs": "^3.1.9",
+    "dotenv": "^16.4.5"
+  }
+}
