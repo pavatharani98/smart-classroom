@@ -11,12 +11,18 @@ const PORT = process.env.PORT || 3000;
 // ─── Firebase Init ────────────────────────────────────────────────────────────
 let serviceAccount;
 
-if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-  // On Render: stored as environment variable (JSON string)
-  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-} else {
-  // Local development: use the downloaded key file
-  serviceAccount = require('./serviceAccountKey.json');
+try {
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    // Railway/Render: stored as environment variable (JSON string)
+    const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
+    serviceAccount = JSON.parse(raw);
+  } else {
+    // Local development: use the downloaded key file
+    serviceAccount = require('./serviceAccountKey.json');
+  }
+} catch(e) {
+  console.error('Firebase service account error:', e.message);
+  process.exit(1);
 }
 
 admin.initializeApp({
