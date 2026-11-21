@@ -126,7 +126,7 @@ body {
 }
 
 .facilities-grid {
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .student-grid {
@@ -643,9 +643,14 @@ body {
   .form-grid { grid-template-columns: 1fr; }
   .facilities-grid { grid-template-columns: repeat(2, 1fr); }
   .student-grid { grid-template-columns: 1fr; }
-  .student-stats { grid-template-columns: 1fr; }
+  .student-stats { grid-template-columns: repeat(3, 1fr); }
   .classroom-header h1 { font-size: 1.5rem; }
   .info-grid { grid-template-columns: 1fr; }
-  .facility-grid { grid-template-columns: repeat(2, 1fr); }
+  .facility-grid { grid-template-columns: repeat(3, 1fr); }
   .btn-submit { width: 100%; justify-content: center; }
+  .facility-tile { padding: 12px 8px; }
+  .facility-tile .f-icon { font-size: 1.5rem; }
+  .facility-tile .f-count { font-size: 1.4rem; }
+  .facility-tile .f-label { font-size: 0.7rem; }
+  .stat-box .s-count { font-size: 2rem; }
 }
