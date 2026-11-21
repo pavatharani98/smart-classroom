@@ -7,17 +7,15 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const BASE_URL = process.env.BASE_URL || 'https://smart-classroom-production-b0f98478.up.railway.app';
 
 // ─── Firebase Init ────────────────────────────────────────────────────────────
 let serviceAccount;
 
 try {
   if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    // Railway/Render: stored as environment variable (JSON string)
-    const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
-    serviceAccount = JSON.parse(raw);
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
   } else {
-    // Local development: use the downloaded key file
     serviceAccount = require('./serviceAccountKey.json');
   }
 } catch(e) {
@@ -41,12 +39,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
-// Home – classroom entry form
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// All classrooms list
 app.get('/classrooms', async (req, res) => {
   try {
     const snapshot = await classroomsCol.orderBy('created_at', 'desc').get();
@@ -58,7 +54,6 @@ app.get('/classrooms', async (req, res) => {
   }
 });
 
-// Submit classroom form
 app.post('/submit', async (req, res) => {
   try {
     const id = uuidv4();
@@ -96,14 +91,12 @@ app.post('/submit', async (req, res) => {
   }
 });
 
-// Success page with QR code
 app.get('/success/:id', async (req, res) => {
   try {
     const doc = await classroomsCol.doc(req.params.id).get();
     if (!doc.exists) return res.status(404).send('Classroom not found.');
 
     const classroom = { id: doc.id, ...doc.data() };
-    const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
     const classroomUrl = `${BASE_URL}/classroom/${classroom.id}`;
 
     const qrCodeDataUrl = await QRCode.toDataURL(classroomUrl, {
@@ -119,7 +112,6 @@ app.get('/success/:id', async (req, res) => {
   }
 });
 
-// Classroom info display page (opened when QR is scanned)
 app.get('/classroom/:id', async (req, res) => {
   try {
     const doc = await classroomsCol.doc(req.params.id).get();
@@ -132,13 +124,11 @@ app.get('/classroom/:id', async (req, res) => {
   }
 });
 
-// API: QR code as data URL
 app.get('/api/qr/:id', async (req, res) => {
   try {
     const doc = await classroomsCol.doc(req.params.id).get();
     if (!doc.exists) return res.status(404).json({ error: 'Not found' });
 
-    const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
     const classroomUrl = `${BASE_URL}/classroom/${req.params.id}`;
     const qrCodeDataUrl = await QRCode.toDataURL(classroomUrl, {
       width: 400, margin: 2,
@@ -151,7 +141,6 @@ app.get('/api/qr/:id', async (req, res) => {
   }
 });
 
-// ─── Start ────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n✅ Smart Classroom System running at http://localhost:${PORT}\n`);
+  console.log(`\n✅ Smart Classroom System running at ${BASE_URL}\n`);
 });
