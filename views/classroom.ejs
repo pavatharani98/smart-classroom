@@ -50,13 +50,13 @@
       </div>
       <div class="facility-grid">
         <% const facilities = [
-          { icon: '🪑', count: classroom.num_chairs, label: 'Chairs' },
-          { icon: '🗂️', count: classroom.num_tables, label: 'Tables' },
-          { icon: '📋', count: classroom.num_desks, label: 'Desks' },
-          { icon: '📝', count: classroom.num_whiteboards, label: 'Whiteboards' },
-          { icon: '🌀', count: classroom.num_fans, label: 'Fans' },
-          { icon: '💡', count: classroom.num_lights, label: 'Lights' },
-          { icon: '🖥️', count: classroom.num_computers, label: 'Computers' },
+          { icon: '🪑', count: parseInt(classroom.num_chairs) || 0, label: 'Chairs' },
+          { icon: '🗂️', count: parseInt(classroom.num_tables) || 0, label: 'Tables' },
+          { icon: '📋', count: parseInt(classroom.num_desks) || 0, label: 'Desks' },
+          { icon: '📝', count: parseInt(classroom.num_whiteboards) || 0, label: 'Whiteboards' },
+          { icon: '🌀', count: parseInt(classroom.num_fans) || 0, label: 'Fans' },
+          { icon: '💡', count: parseInt(classroom.num_lights) || 0, label: 'Lights' },
+          { icon: '🖥️', count: parseInt(classroom.num_computers) || 0, label: 'Computers' },
         ]; %>
         <% facilities.forEach(f => { %>
           <div class="facility-tile">
@@ -82,17 +82,17 @@
       <div class="student-stats">
         <div class="stat-box total">
           <div class="s-icon">👥</div>
-          <div class="s-count"><%= classroom.total_students %></div>
+          <div class="s-count"><%= parseInt(classroom.total_students) || 0 %></div>
           <div class="s-label">Total Students</div>
         </div>
         <div class="stat-box boys">
           <div class="s-icon">👦</div>
-          <div class="s-count"><%= classroom.male_students %></div>
+          <div class="s-count"><%= parseInt(classroom.male_students) || 0 %></div>
           <div class="s-label">Boys</div>
         </div>
         <div class="stat-box girls">
           <div class="s-icon">👧</div>
-          <div class="s-count"><%= classroom.female_students %></div>
+          <div class="s-count"><%= parseInt(classroom.female_students) || 0 %></div>
           <div class="s-label">Girls</div>
         </div>
       </div>
